@@ -8,13 +8,14 @@ using namespace std;
 
 const string bookFile="book.txt";
 const string memFile="mem.txt";
+const string borrowFiles="borrow.txt";
 
 void Library::saveBooksToFiles()const{
     ofstream fout(bookFile);
     for(const auto& pair:books){
         const Book& book=pair.second;
         fout<<book.getBookId()<<","<<book.getTitle()<<","<<book.getauthor()<<","
-        <<book.isAvailable()<<"\n";
+        <<(book.isAvailable()?"0":"1")<<"\n";
 
     }
     fout.close();
@@ -35,6 +36,13 @@ void Library::saveMemToFiles() const{
     }
     fout.close();
 }
+void Library::saveBorrowToFiles()const{
+    ofstream fout(borrowFiles);
+    for(const auto& pair:borrow){
+        fout<<pair.first<<","<<pair.second<<"\n";
+    }
+    fout.close();
+}
 void Library::loadBookFromFiles(){
     ifstream fin(bookFile);
     if (!fin.is_open()) {
@@ -51,11 +59,11 @@ void Library::loadBookFromFiles(){
         getline(ss,author,',');
         getline(ss,issuedStr,',');
         int id=stoi(idStr);
-        bool issued=(issuedStr=="1");
+        bool issued= (issuedStr == "1");
         books[id]=Book(id,title,author,issued);
     }
     fin.close();
-    cout << "Books loaded successfully from " << bookFile << endl;
+    // cout << "Books loaded successfully from " << bookFile << endl;
 }
 void Library::loadMemFromFiles(){
     ifstream fin(memFile);
@@ -82,7 +90,24 @@ void Library::loadMemFromFiles(){
         members[id]=member;
     }
     fin.close();
-    cout << "Members loaded successfully from " << memFile << endl;
+    // cout << "Members loaded successfully from " << memFile << endl;
+}
+void Library::loadBorrowFromFiles(){
+    ifstream fin(borrowFiles);
+    if(!fin.is_open()){
+        cerr << "Error: Could not open file " << borrowFiles << endl;
+        return;
+    }
+    string line;
+    while(getline(fin,line)){
+        stringstream ss(line);
+        string borrowBookId,borrowMemId;
+        getline(ss,borrowBookId,',');
+        getline(ss,borrowMemId,',');
+        borrow[stoi(borrowBookId)]=stoi(borrowMemId);
+    }
+    fin.close();
+    // cout << "Borrow records loaded from " << borrowFiles << endl;
 }
 
 void Library::addBook(const Book& book){
@@ -91,7 +116,6 @@ void Library::addBook(const Book& book){
 
     //was thinking of appending bookfile with book data when they are added
     // but problem is it wont get availablity and when next time it will create duplicacy
-
 
     // ofstream out(bookFile,ios::app);
     // out<<book.getBookId()<<","
@@ -104,7 +128,7 @@ void Library::addMember(const Member& member){
     members[member.getMemberId()]=member;
     cout<<member.getMemberName() <<" joined Library"<<endl;
 
-    // same here with mem
+    // same here with members
     // initially they dont have any borrowed books but after sometime they may borrow some books
     // and that will create duplicacy
 
@@ -123,19 +147,33 @@ void Library::addMember(const Member& member){
 }
 
 void Library::issueBook(int memberId,int bookId){
-    if(borrow.find(bookId)!=borrow.end()){
-        cout<<"Book Not Available \n";
-        return;
-    }
     auto bookIt=books.find(bookId);
     auto memIt=members.find(memberId);
+
     if(bookIt==books.end() || memIt==members.end()){
         cout<<"Invalid BookId or MemberId\n";
         return;
     }
+    if(borrow.find(bookId)!=borrow.end()){
+        if(borrow[bookId]==memberId)
+            cout<<books[bookId].getTitle()<<" already issued to "<<members[memberId].getMemberName();
+        else
+            cout<<"Book Not Available \n";
+        return;
+    }
+    
+    auto findBorrow=borrow.find(bookIt->second.getBookId());
+    // if(findBorrow!=borrow.end()){
+    //     if(borrow[bookIt->first]==memIt->second.getMemberId())
+    //         cout<<bookIt->second.getTitle()<<"already issued to "<<memIt->second.getMemberName();
+    //     cout<<bookIt->second.getTitle()<<"borrowed by Someone"; //<<memIt->second.getMemberName();
+    //     return;
+    // }
     bookIt->second.issuedStatus(true);
     borrow[bookId]=memberId;
     memIt->second.borrowBook(bookId);
+    cout<<memIt->second.getMemberId()<<" "<<memIt->second.getMemberName()
+    <<" borrowed book : "<<bookIt->second.getBookId()<<" "<<bookIt->second.getTitle();
 }
 void Library::returnBook(int bookId){
     auto it=borrow.find(bookId);
@@ -147,6 +185,7 @@ void Library::returnBook(int bookId){
     borrow.erase(bookId);
     books[bookId].returnBook();
     members[memId].returnBook(bookId);
+    cout<<books[bookId].getTitle() << " returned by "<<members[memId].getMemberName();
 }
 void Library::displayBook() const{
     if(books.empty()){
@@ -211,115 +250,3 @@ void Library::displayBookStatus(int bookId) const{
     }
 }
 }
-
-
-
-
-
-
-// void Library::issueBook(int memberId,int bookId){
-//     if(members.find(memberId)==members.end() || books.find(bookId)==books.end()){
-//         cout<<"Invalid BookId or MemberId"<<endl;
-//         return;
-//     }
-//     Book& book=books[bookId];
-//     Member& member=members[memberId];
-//     if(member.hasBook(bookId)){
-//         cout<<member.getMemberName()<<" already has "<<book.getTitle()<<" issued"<<endl;
-//         return;
-//     }
-//     if(!book.isAvailable()){
-//         cout<<"Book is currently not available"<<endl;
-//         return;
-//     }
-//     book.issueBook();
-//     member.borrowBook(bookId);
-//     cout<<"Book issued successfully to "<< member.getMemberName();
-// }
-// void Library::returnBook(int memberId,int bookId){
-//     if(members.find(memberId)==members.end() || books.find(bookId)==books.end()){
-//         cout<<"Invalid BookId or MemberId"<<endl;
-//         return;
-//     }
-//     Book& book=books[bookId];
-//     Member& member=members[memberId];
-//     if(book.isAvailable()){
-//         cout<<"book has not been issued\n";
-//         return;
-//     }
-//     if(!member.hasBook(bookId)){
-//         cout<<member.getMemberName()<<" does not have "<<book.getTitle()<<" issued"<<endl;
-//         return;
-//     }
-//     book.returnBook();
-//     member.returnBook(bookId);
-//     cout<<"Book returned Successfully";
-// }
-// void Library::displayBook() const{
-//     if(books.empty()){
-//         cout<<"No Books in the Library"<<endl;
-//         return;
-//     }
-//     cout<<"\n<----------List Of Books---------->\n";
-//     for(const auto& pair: books)
-//         pair.second.displayBook();
-// }
-// void Library::displayMember() const{
-//     cout<<"\n<----------List Of Members---------->\n";
-//     if(members.empty()){
-//         cout<<"No Listed members :(\n";
-//         return;
-//     }
-//     for(const auto& pair: members)
-//         pair.second.displayMember();
-// }
-// void Library::displayMemberWithBook(int memberId) const{
-//     auto it=members.find(memberId);
-//     if(it==members.end()){
-//         cout<<"Member not Found"<<endl;
-//         return;
-//     }
-//     const Member& member=it->second;
-//     cout<<"\n<------Members Details------>\n";
-//     cout<<"ID : "<<member.getMemberId()<<endl<<"Name: "<<member.getMemberName()<<endl;
-//     auto borrowed=member.getBorrowedBooks();
-//     if(borrowed.empty()){
-//         cout<<"No Books borrowed"<<endl;
-//         return;
-//     }
-//     cout<<"<------Borrowed Books------>\n";
-//     for(int id:borrowed){
-//         auto bid=books.find(id);
-//         if(bid!=books.end()){
-//             cout<<"BookId : "<< id<<" | Title: "<<bid->second.getTitle()<<endl;
-//         }
-//     }
-// }
-// void Library::displayBookStatus(int bookId) const{
-//     auto it=books.find(bookId);
-//     if(it==books.end()){
-//         cout<<"Book Not Found"<<endl;
-//         return;
-//     }
-//     const Book& book=it->second;
-//     cout<<"<------Book Status------>\n";
-//     cout<<"BookId : "<<bookId<<endl;
-//     cout<<"Title : "<< book.getTitle()<<endl;
-//     cout<<"Author : "<<book.getauthor()<<endl;
-//     if(book.isAvailable()){
-//         cout<<"Borrower : None" <<endl;
-//     }else{
-//         string borrower="";
-//         for(const auto& pair:members){
-//             const Member& member=pair.second;
-//             const auto& borrowedBooks=member.getBorrowedBooks();
-//             if(borrowedBooks.find(bookId)!=borrowedBooks.end()){
-//                 borrower=member.getMemberName();
-//                 break;
-//             }
-//         }
-//         cout<<"Borrower : "<<borrower <<endl;
-//     }
-    
-// }
-
