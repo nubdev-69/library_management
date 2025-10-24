@@ -1,0 +1,61 @@
+845, The Call of the Wild, Jack London,0
+715, The Fault in Our Stars, John Green,0
+584, The Girl on the Train, Paula Hawkins,0
+496, The Time Traveler’s Wife, Audrey Niffenegger,0
+517, The Da Vinci Code, Dan Brown,0
+578, Little Women, Louisa May Alcott,0
+287, The Count of Monte Cristo, Alexandre Dumas,0
+941, The Three Musketeers, Alexandre Dumas,0
+413, The Lion, the Witch and the Wardrobe,0
+528, The Name of the Wind, Patrick Rothfuss,0
+629, Don Quixote, Miguel de Cervantes,0
+347, The Road, Cormac McCarthy,0
+871, The Shining, Stephen King,0
+628, The Book Thief, Markus Zusak,0
+863, The Secret Garden, Frances Hodgson Burnett,0
+674, Slaughterhouse-Five, Kurt Vonnegut,0
+286, Life of Pi, Yann Martel,0
+859, The Handmaid’s Tale, Margaret Atwood,0
+956, It, Stephen King,0
+568, Brave New World, Aldous Huxley,0
+101,The Hobbit,J.R.R,1
+392, Gone Girl, Gillian Flynn,0
+439, The Hunger Games, Suzanne Collins,0
+915, The Old Man and the Sea, Ernest Hemingway,0
+817, One Hundred Years of Solitude, Gabriel García Márquez,0
+429, Beloved, Toni Morrison,0
+476, The Stranger, Albert Camus,0
+864, The Grapes of Wrath, John Steinbeck,0
+472, Les Misérables, Victor Hugo,0
+324, The Kite Runner, Khaled Hosseini,0
+888, The Alchemist, Paulo Coelho,0
+512, Pride and Prejudice, Jane Austen,0
+935, The Brothers Karamazov, Fyodor Dostoevsky,0
+894, The Hobbit, J.R.R. Tolkien,0
+312, The Color Purple, Alice Walker,0
+265, The Martian, Andy Weir,0
+459, The Odyssey, Homer,0
+365, Anna Karenina, Leo Tolstoy,0
+310, The Picture of Dorian Gray, Oscar Wilde,0
+592, A Tale of Two Cities, Charles Dickens,0
+921, Crime and Punishment, Fyodor Dostoevsky,0
+558, Jane Eyre, Charlotte Brontë,0
+752, The Silence of the Lambs, Thomas Harris,0
+746, Fahrenheit 451, Ray Bradbury,0
+643, A Game of Thrones, George R.R. Martin,0
+934, Dune, Frank Herbert,0
+276, The Great Gatsby, F. Scott Fitzgerald,0
+437, War and Peace, Leo Tolstoy,0
+648, Moby-Dick, Herman Melville,0
+659, Charlotte’s Web, E.B. White,0
+853, The Catcher in the Rye, J.D. Salinger,0
+738, Dracula, Bram Stoker,0
+247, To Kill a Mockingbird, Harper Lee,0
+926, The Wind in the Willows, Kenneth Grahame,0
+734, The Lord of the Rings, J.R.R. Tolkien,0
+687, Wuthering Heights, Emily Brontë,0
+781, Catch-22, Joseph Heller,0
+102,1984,George Orwell,0
+389, 1984, George Orwell,0
+642, Frankenstein, Mary Shelley,0
+103,A brief history of time,Stephen Hawkings,1
