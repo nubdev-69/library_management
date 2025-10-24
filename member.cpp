@@ -1,6 +1,7 @@
 #include "Member.h"
 #include<iostream>
 using namespace std;
+
 Member::Member(int id,string n){
     memberId=id;
     name=n;
@@ -38,17 +39,13 @@ void Member::displayMember() const{
 }
 void Member::borrowBook(int id){
     auto result=borrowedBooks.insert(id);
-    if(result.second){
-        cout<<name<<" Borrowed Book Id "<<id<<endl;
-    }
-    else{
-        cout << name << " already borrowed book ID " << id << endl;
-    }
+    // if(result.second){
+    //     cout<<name<<" Borrowed Book Id "<<id<<endl;
+    // }
+    // else{
+    //     cout << name << " already borrowed book ID " << id << endl;
+    // }
 }
 void Member::returnBook(int id){
-    if(borrowedBooks.erase(id)){
-        cout<<name<<" returned BookID "<<id<<endl;
-    }else{
-        cout<<name<<" has not borrowed BookId "<<id<<endl;
-    }
+    borrowedBooks.erase(id);
 }
