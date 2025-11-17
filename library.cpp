@@ -1,4 +1,5 @@
 #include "library.h"
+#include<limits>
 #include<fstream>
 #include<sstream>
 #include<istream>
