@@ -455,4 +455,5 @@ void Library::displayBookStatus(int bookId) const{
             cout << "Borrower : " << members.at(memberId).getMemberName() << endl;
         }
     }
+}
 
