@@ -1,0 +1,45 @@
+Philosophy,476;888;935
+Mystery,517
+Classic,915;629;864;578;276;247
+Fantasy,413;528;643;101;894;734
+Science Fiction,265;642;934
+Horror,738;871;956
+Children,863;659;926
+Science,103;109
+Historical Fiction,628;429;437;592;472
+Psychological Fiction,921
+Romance,496;365;715;558;687;512
+Magical Realism,817
+Coming-of-Age,853
+Epic,459
+Mystery,517
+Gothic Fiction,310
+Gothic Horror,738
+War Fiction,781;674
+Fantasy,734;894;101;528;643
+Gothic Fiction,310
+Fiction,100
+Romance,687;512;558;365;715;496
+Children,926;659;863
+Historical Fiction,437;592;472;429;628
+Gothic Science Fiction,642
+Thriller,584;752;392
+Epic,459
+Adventure,648;286;941;287;845
+Philosophy,935;888;476
+Psychological Fiction,921
+Drama,312;324
+Science Fiction,934;265
+Drama,312;324
+Magical Realism,817
+Coming-of-Age,853
+Classic,247;276;915;629;864;578
+War Fiction,674;781
+Dystopian,389;439;859;746;568;347;102
+Gothic Horror,738
+Adventure,845;287;648;286;941
+Thriller,584;752;517;392
+C.S. Lewis,413
+Science,103;109
+Dystopian,347;102;568;746;859;389;439
+Horror,956;871

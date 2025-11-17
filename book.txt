@@ -1,61 +1,63 @@
-845, The Call of the Wild, Jack London,0
-715, The Fault in Our Stars, John Green,0
-584, The Girl on the Train, Paula Hawkins,0
-496, The Time Traveler’s Wife, Audrey Niffenegger,0
-517, The Da Vinci Code, Dan Brown,0
-578, Little Women, Louisa May Alcott,0
-287, The Count of Monte Cristo, Alexandre Dumas,0
-941, The Three Musketeers, Alexandre Dumas,0
-413, The Lion, the Witch and the Wardrobe,0
-528, The Name of the Wind, Patrick Rothfuss,0
-629, Don Quixote, Miguel de Cervantes,0
-347, The Road, Cormac McCarthy,0
-871, The Shining, Stephen King,0
-628, The Book Thief, Markus Zusak,0
-863, The Secret Garden, Frances Hodgson Burnett,0
-674, Slaughterhouse-Five, Kurt Vonnegut,0
-286, Life of Pi, Yann Martel,0
-859, The Handmaid’s Tale, Margaret Atwood,0
-956, It, Stephen King,0
-568, Brave New World, Aldous Huxley,0
-101,The Hobbit,J.R.R,1
-392, Gone Girl, Gillian Flynn,0
-439, The Hunger Games, Suzanne Collins,0
-915, The Old Man and the Sea, Ernest Hemingway,0
-817, One Hundred Years of Solitude, Gabriel García Márquez,0
-429, Beloved, Toni Morrison,0
-476, The Stranger, Albert Camus,0
-864, The Grapes of Wrath, John Steinbeck,0
-472, Les Misérables, Victor Hugo,0
-324, The Kite Runner, Khaled Hosseini,0
-888, The Alchemist, Paulo Coelho,0
-512, Pride and Prejudice, Jane Austen,0
-935, The Brothers Karamazov, Fyodor Dostoevsky,0
-894, The Hobbit, J.R.R. Tolkien,0
-312, The Color Purple, Alice Walker,0
-265, The Martian, Andy Weir,0
-459, The Odyssey, Homer,0
-365, Anna Karenina, Leo Tolstoy,0
-310, The Picture of Dorian Gray, Oscar Wilde,0
-592, A Tale of Two Cities, Charles Dickens,0
-921, Crime and Punishment, Fyodor Dostoevsky,0
-558, Jane Eyre, Charlotte Brontë,0
-752, The Silence of the Lambs, Thomas Harris,0
-746, Fahrenheit 451, Ray Bradbury,0
-643, A Game of Thrones, George R.R. Martin,0
-934, Dune, Frank Herbert,0
-276, The Great Gatsby, F. Scott Fitzgerald,0
-437, War and Peace, Leo Tolstoy,0
-648, Moby-Dick, Herman Melville,0
-659, Charlotte’s Web, E.B. White,0
-853, The Catcher in the Rye, J.D. Salinger,0
-738, Dracula, Bram Stoker,0
-247, To Kill a Mockingbird, Harper Lee,0
-926, The Wind in the Willows, Kenneth Grahame,0
-734, The Lord of the Rings, J.R.R. Tolkien,0
-687, Wuthering Heights, Emily Brontë,0
-781, Catch-22, Joseph Heller,0
-102,1984,George Orwell,0
-389, 1984, George Orwell,0
-642, Frankenstein, Mary Shelley,0
-103,A brief history of time,Stephen Hawkings,1
+100,Shadow Slave,G3,fiction
+103, A Brief History of Time, Stephen Hawking,Science
+642, Frankenstein, Mary Shelley,Science Fiction
+389, 1984, George Orwell, Dystopian
+687, Wuthering Heights, Emily Brontë,Romance
+734, The Lord of the Rings, J.R.R. Tolkien,Fantasy
+781, Catch-22, Joseph Heller,War Fiction
+102, 1984, George Orwell, Dystopian
+247, To Kill a Mockingbird, Harper Lee,Classic
+926, The Wind in the Willows, Kenneth Grahame,Children
+738, Dracula, Bram Stoker,Horror
+659, Charlotte’s Web, E.B. White,Children
+853, The Catcher in the Rye, J.D. Salinger, Coming-of-Age
+648, Moby-Dick, Herman Melville,Adventure
+437, War and Peace, Leo Tolstoy,Historical Fiction
+276, The Great Gatsby, F. Scott Fitzgerald,Classic
+643, A Game of Thrones, George R.R. Martin,Fantasy
+934, Dune, Frank Herbert,Science Fiction
+746, Fahrenheit 451, Ray Bradbury, Dystopian
+752, The Silence of the Lambs, Thomas Harris,Thriller
+558, Jane Eyre, Charlotte Brontë,Romance
+921, Crime and Punishment, Fyodor Dostoevsky,Psychological Fiction
+592, A Tale of Two Cities, Charles Dickens,Historical Fiction
+310, The Picture of Dorian Gray, Oscar Wilde,Gothic Fiction
+365, Anna Karenina, Leo Tolstoy,Romance
+459, The Odyssey, Homer,Epic
+265, The Martian, Andy Weir,Science Fiction
+894, The Hobbit, J.R.R. Tolkien,Fantasy
+312, The Color Purple, Alice Walker,Drama
+935, The Brothers Karamazov, Fyodor Dostoevsky,Philosophy
+512, Pride and Prejudice, Jane Austen,Romance
+888, The Alchemist, Paulo Coelho,Philosophy
+324, The Kite Runner, Khaled Hosseini,Drama
+472, Les Misérables, Victor Hugo,Historical Fiction
+864, The Grapes of Wrath, John Steinbeck,Classic
+476, The Stranger, Albert Camus,Philosophy
+817, One Hundred Years of Solitude, Gabriel García Márquez,Magical Realism
+429, Beloved, Toni Morrison,Historical Fiction
+915, The Old Man and the Sea, Ernest Hemingway,Classic
+439, The Hunger Games, Suzanne Collins, Dystopian
+859, The Handmaid’s Tale, Margaret Atwood, Dystopian
+568, Brave New World, Aldous Huxley, Dystopian
+956, It, Stephen King,Horror
+286, Life of Pi, Yann Martel,Adventure
+674, Slaughterhouse-Five, Kurt Vonnegut,War Fiction
+101, The Hobbit, J.R.R. Tolkien,Fantasy
+392, Gone Girl, Gillian Flynn,Thriller
+863, The Secret Garden, Frances Hodgson Burnett,Children
+628, The Book Thief, Markus Zusak,Historical Fiction
+871, The Shining, Stephen King,Horror
+347, The Road, Cormac McCarthy, Dystopian
+629, Don Quixote, Miguel de Cervantes,Classic
+528, The Name of the Wind, Patrick Rothfuss,Fantasy
+413, The Lion, the Witch and the Wardrobe,Fantasy
+941, The Three Musketeers, Alexandre Dumas,Adventure
+287, The Count of Monte Cristo, Alexandre Dumas,Adventure
+578, Little Women, Louisa May Alcott,Classic
+715, The Fault in Our Stars, John Green,Romance
+517, The Da Vinci Code, Dan Brown,Mystery
+584, The Girl on the Train, Paula Hawkins,Thriller
+496, The Time Traveler’s Wife, Audrey Niffenegger,Romance
+845, The Call of the Wild, Jack London,Adventure
+109, Theory of Everything, Stephen Hawking,Science
