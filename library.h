@@ -28,7 +28,7 @@ public:
 
     bool isAvailable(int bookId) const;
     void addBook(const Book& book);
-    // void addBook(int bookId);
+    void addBook(int bookId);
     void addMember(int memberId);
     void addMember(const Member& member);
 
