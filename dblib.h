@@ -19,7 +19,7 @@ public:
     // Core functions
     int  addBook(const std::string& title, const std::string& author,
                  const std::string& category = "", const std::string& filePath = "");
-    void addMember(const std::string& name);
+    void addMember(const std::string& role);
 
     void issueBook(int memberId, int bookId);
     void returnBook(int bookId);
@@ -38,6 +38,7 @@ public:
     bool isBookAvailable(int bookId) const;
     std::string getMemberName(int id) const;
     std::string getBookTitle(int id) const;
+    int getCategoryId(const string& category) const;
 };
 
 #endif
