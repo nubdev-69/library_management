@@ -20,3 +20,4 @@ nov27:
     fixed errors(finalize error,memory leakage,password)
     compiled and done
     finally over
+    organised the spaces to each other
