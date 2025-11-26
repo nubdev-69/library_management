@@ -14,3 +14,9 @@ Add book function return 3 values -1 for database error,0 while adding book, boo
 
 Add member take role,name,email,password(use 2 helper function to get valid email and valid password),
 later i will use hashing/encryption for password storage
+
+nov27:
+    finished the remaining function
+    fixed errors(finalize error,memory leakage,password)
+    compiled and done
+    finally over

@@ -2,6 +2,7 @@
 #define LIBRARY2_H
 
 #include <string>
+
 #include <sqlite3.h>
 
 class LIBRARY2 {
@@ -38,7 +39,7 @@ public:
     bool isBookAvailable(int bookId) const;
     std::string getMemberName(int id) const;
     std::string getBookTitle(int id) const;
-    int getCategoryId(const string& category) const;
+    int getCategoryId(const std::string& category) const;
 };
 
 #endif

@@ -1,6 +1,7 @@
 #include "dblib.h"
 #include <iostream>
 #include <cstring>
+#include<string>
 #include <regex>
 using namespace std;
 
@@ -34,7 +35,6 @@ bool LIBRARY2::bindAndStep(sqlite3_stmt* stmt) {
     }
     return true;
 }
-
 // Utility functions
 string LIBRARY2::getMemberName(int id) const {
     string name = "Unknown";
@@ -127,7 +127,6 @@ void LIBRARY2::returnBook(int bookId) {
     if (sqlite3_prepare_v2(db, sql.c_str(), -1, &stmt, nullptr) == SQLITE_OK) {
         sqlite3_bind_int(stmt, 1, bookId);
         if (bindAndStep(stmt)) {
-            cout << getMemberName(0) /* will be fetched properly below */ << " returned book " << bookId << endl;
         }
         sqlite3_finalize(stmt);
     }
@@ -154,7 +153,10 @@ void LIBRARY2::displayAllBooks() {
         LEFT JOIN Issues i ON b.id = i.bookId AND i.returnDate IS NULL;
     )";
     sqlite3_stmt* stmt;
-    if (sqlite3_prepare_v2(db, sql.c_str(), -1, &stmt, nullptr) != SQLITE_OK) return;
+    if (sqlite3_prepare_v2(db, sql.c_str(), -1, &stmt, nullptr) != SQLITE_OK){
+        sqlite3_finalize(stmt);
+        return;
+    }
 
     while (sqlite3_step(stmt) == SQLITE_ROW) {
         int id = sqlite3_column_int(stmt, 0);
@@ -177,7 +179,10 @@ void LIBRARY2::listIssuedBooks(){
                         "left join categories c on b.categoryid=c.id";
 
     sqlite3_stmt* stmt;
-    if(sqlite3_prepare_v2(db,query,-1,&stmt,nullptr)!= SQLITE_OK) return;
+    if(sqlite3_prepare_v2(db,query,-1,&stmt,nullptr)!= SQLITE_OK){
+        sqlite3_finalize(stmt);
+        return;
+    }
 
     while(sqlite3_step(stmt)==SQLITE_ROW){
         int memberId=sqlite3_column_int(stmt,0);
@@ -200,11 +205,12 @@ void LIBRARY2::searchBookByTitle(const string& title){
                         "where b.title like ?";
     sqlite3_stmt* stmt;
     string pattern="%"+title+"%";
-    if(sqlite3_prepare_v2(db,query,-1,&stmt,nullptr)!=SQLITE_OK) return;
+    if(sqlite3_prepare_v2(db,query,-1,&stmt,nullptr)!=SQLITE_OK){
+        sqlite3_finalize(stmt);
+        return;
+    }
 
     sqlite3_bind_text(stmt, 1, pattern.c_str(), -1, SQLITE_TRANSIENT);
-
-    if(sqlite3_step(stmt)){
 
         while(sqlite3_step(stmt)==SQLITE_ROW){
         int id=sqlite3_column_int(stmt,0);
@@ -216,9 +222,6 @@ void LIBRARY2::searchBookByTitle(const string& title){
         cout<<"Book Id : "<<id<<" | Title : "<<title<<" | Author : "
         <<author<<endl<<"Category : "<<category<<" | Status : "<<avaliable<<endl;
     }
-    }else{
-        cout<<"No books available by this id";
-    }
     sqlite3_finalize(stmt);
 
 }
@@ -228,13 +231,18 @@ void LIBRARY2::listBooksByMember(int memberId){
     "left join categories c on c.id=b.categoryId"
     "where i.memberId=? AND i.returndate is NULL";
     sqlite3_stmt* stmt;
-    if(sqlite3_prepare_v2(db,query,-1,&stmt,nullptr) != SQLITE_OK) return;
+    if(sqlite3_prepare_v2(db,query,-1,&stmt,nullptr) != SQLITE_OK){
+        sqlite3_finalize(stmt);
+        return;
+    }
     sqlite3_bind_int(stmt,1,memberId);
-    if(sqlite3_step(stmt)){
-        cout<<"MemberId : "<<memberId<<" | "<<getMemberName(memberId)<<endl<<endl;
-        cout<<"<----List of Active Issued Book---->" <<endl<<endl;
-        
+    bool hasBook=false;
         while(sqlite3_step(stmt)==SQLITE_ROW){
+            if(!hasBook){
+                 cout<<"MemberId : "<<memberId<<" | "<<getMemberName(memberId)<<endl<<endl;
+        cout<<"<----List of Active Issued Book---->" <<endl<<endl;
+        hasBook=true;
+            }
             int id=sqlite3_column_int(stmt,0);
             string title=(const char*)sqlite3_column_text(stmt,1);
             string author=(const char*)sqlite3_column_text(stmt,2);
@@ -244,9 +252,7 @@ void LIBRARY2::listBooksByMember(int memberId){
             cout<<"BookId : "<<id<<" | Title"<<title<<" | Author : "
             <<author<<" | Category : "<<category<<" | Date of Issue"<<issueDate<<endl; 
         }
-    }else{
-        cout<<"The Member does not have any Active Issued Book"<<endl;
-    }
+        if(!hasBook) cout<<"No active issued books for member"<<endl;
     sqlite3_finalize(stmt);
 }
 // Add other functions (listIssuedBooks, search, etc.) using same clean pattern...
@@ -256,12 +262,15 @@ int LIBRARY2::addBook(const string& title, const string& author, const string& c
     // Keep your working version - just remove openDB() calls
     if(!title.size() || !author.size() || !category.size()){
         cout<<"Enter Valid Book"<<endl;
-        return;
+        return 0;
     }
     const char* query="insert into books(title,author,categoryId,filepath) values(?,?,?,?);";
     sqlite3_stmt* stmt;
     int catId=getCategoryId(category);
-    if(sqlite3_prepare_v2(db,query,-1,&stmt,nullptr)!=SQLITE_OK) return -1;
+    if(sqlite3_prepare_v2(db,query,-1,&stmt,nullptr)!=SQLITE_OK){
+        sqlite3_finalize(stmt);
+        return -1;
+    }
 
     sqlite3_bind_text(stmt,1,title.c_str(),-1,SQLITE_TRANSIENT);
     sqlite3_bind_text(stmt,2,author.c_str(),-1,SQLITE_TRANSIENT);
@@ -297,10 +306,8 @@ string getEmail(){
 }
 bool validPassword(string password){
     for(int i=0;i<password.length();i++){
-        if(i==0 && !((password[i]>=65 && password[i]<=90) || (password[i]>=97 && password[i]<=122)) ){
-            return false;
-        }
-        if(!((password[i]>=64 && password[i]<=90) || (password[i]>=97 && password[i]<=122) || (password[i]>=48 && password[i]<=57) || password[i]==35 || password[i]==36)) return false;
+        if (i == 0 && !isalpha(password[i])) return false;
+        if (!isalnum(password[i]) && password[i] != '#' && password[i] != '$' && password[i] != '@' /* etc */) return false;   
     }
     return true;
 }
@@ -327,12 +334,23 @@ void LIBRARY2::addMember(const string& role){
     const char* query="insert into members(role,name,email,password) values(?,?,?,?);";
     sqlite3_stmt* stmt;
 
-    if(sqlite3_prepare_v2(db,query,-1,&stmt,nullptr)!=SQLITE_OK) return;
+    if(sqlite3_prepare_v2(db,query,-1,&stmt,nullptr)!=SQLITE_OK){
+        sqlite3_finalize(stmt);
+        return;
+    }
 
     sqlite3_bind_text(stmt,1,role.c_str(),-1,SQLITE_TRANSIENT);
     sqlite3_bind_text(stmt,2,name.c_str(),-1,SQLITE_TRANSIENT);
     sqlite3_bind_text(stmt,3,email.c_str(),-1,SQLITE_TRANSIENT);
     sqlite3_bind_text(stmt,4,password.c_str(),-1,SQLITE_TRANSIENT);
+
+    if(sqlite3_step(stmt)!=SQLITE_DONE){
+        sqlite3_finalize(stmt);
+        return;
+    }
+    sqlite3_finalize(stmt);
+    cout<<"New Member Successfully Added"<<endl;
+
 }
 
 int LIBRARY2::getCategoryId(const string &name)const {
@@ -341,7 +359,10 @@ int LIBRARY2::getCategoryId(const string &name)const {
     }
     sqlite3_stmt* stmt;
     string query="select id from categories where name=?";
-    sqlite3_prepare_v2(db,query.c_str(),-1, &stmt,nullptr);
+    if(sqlite3_prepare_v2(db,query.c_str(),-1, &stmt,nullptr)!=SQLITE_OK){
+        sqlite3_finalize(stmt);
+        return 0;
+    }
 
     sqlite3_bind_text(stmt,1,name.c_str(),-1,SQLITE_TRANSIENT);
     
@@ -356,8 +377,49 @@ int LIBRARY2::getCategoryId(const string &name)const {
     query = "INSERT INTO Categories (categoryName) VALUES (?);";
     sqlite3_prepare_v2(db, query.c_str(), -1, &stmt, nullptr);
     sqlite3_bind_text(stmt, 1, name.c_str(), -1, SQLITE_TRANSIENT);
-    sqlite3_step(stmt);
+    if(sqlite3_step(stmt)!=SQLITE_DONE){
+        sqlite3_finalize(stmt);
+        return 0;
+    }
     sqlite3_finalize(stmt);
 
     return (int)sqlite3_last_insert_rowid(db);
+}
+
+void LIBRARY2::deleteBook(int bookId){
+    if(!bookExists(bookId)) return;
+    sqlite3_stmt* stmt;
+    const char* query="delete from books where id=?;";
+    if(sqlite3_prepare_v2(db,query,-1,&stmt,nullptr)!= SQLITE_OK){
+        sqlite3_finalize(stmt);
+        return;
+    }
+    
+    sqlite3_bind_int(stmt,1,bookId);
+    if(sqlite3_step(stmt)!= SQLITE_DONE){
+        sqlite3_finalize(stmt);
+        return;
+    }
+    sqlite3_finalize(stmt);
+    cout<<"Book Successfully deleted"<<endl;
+    return;
+    
+}
+void LIBRARY2::deleteMember(int memberId){
+    if(!memberExists(memberId)) return;
+    sqlite3_stmt* stmt;
+    const char* query="delete from members where memberid=?;";
+    if(sqlite3_prepare_v2(db,query,-1,&stmt,nullptr)!= SQLITE_OK){
+        sqlite3_finalize(stmt);
+        return;
+    }
+    
+    sqlite3_bind_int(stmt,1,memberId);
+    if(sqlite3_step(stmt)!= SQLITE_DONE){
+        sqlite3_finalize(stmt);
+        return;
+    }
+    sqlite3_finalize(stmt);
+    cout<<"Member Successfully deleted"<<endl;
+    return;
 }
