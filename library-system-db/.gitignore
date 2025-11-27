@@ -1,0 +1,14 @@
+# Binaries
+library_system
+libraray_system
+library_system.exe
+*.exe
+*.out
+
+# Database (optional – keep if you want to share sample data)
+/data/library.db
+
+# IDE junk
+.vscode/
+.idea/
+*.code-workspaces

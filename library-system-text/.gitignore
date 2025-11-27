@@ -1,0 +1,13 @@
+#binaries
+libmgm
+library_system
+*.exe
+*.out
+
+#data
+/data
+
+#IDE junk
+.vscode/
+.idea/
+*.code-workspaces
