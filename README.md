@@ -33,7 +33,7 @@ g++ -std=c++17 src/*.cpp -I include -lsqlite3 -o library_system
 ./library_system
 ```
 
-→ Full README inside: [`library system db/README.md`](./library%20system%20db/README.md)
+→ Full README inside: [`library-system-db/README.md`](./library-system-db/README.md)
 
 ---
 
@@ -51,7 +51,7 @@ g++ -std=c++17 *.cpp -o library_text
 ./library_text
 ```
 
-→ Full README inside: [`library system text/README.md`](./library%20system%20text/README.md)
+→ Full README inside: [`library-system-text/README.md`](./library-system-text/README.md)
 
 ---
 
