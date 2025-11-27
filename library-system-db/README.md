@@ -1,5 +1,3 @@
-Here’s a **perfect, professional `README.md`** that you can copy-paste directly into your new clean repository.
-
 ```markdown
 # Library Management System (SQLite Version)
 

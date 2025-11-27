@@ -1,13 +1,9 @@
-Here’s a **perfect, clean, and professional `README.md`** for your **old text-file-based version** — the one using `.txt` files, `unordered_map`, `unordered_set`, and separate headers (`book.h`, `member.h`, `library.h`).
-
-Put this in your **old-text-version/** folder or in a separate legacy repo:
-
 ```markdown
 # Library Management System (Legacy Text-File Version)
 
 This is the **original text-file-based** Library Management System written in C++ using plain `.txt` files for persistence and `std::unordered_map` / `std::unordered_set` for fast in-memory operations.
 
-> **Note:** This version has been fully replaced by the modern [SQLite version](https://github.com/yourusername/library-system-db).  
+> **Note:** This version has been fully replaced by the modern [SQLite version](https://github.com/nubdev-69/library_management/tree/main/library-system-db).  
 > Kept here for reference, nostalgia, and learning purposes.
 
 ## Features

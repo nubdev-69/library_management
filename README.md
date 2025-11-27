@@ -1,7 +1,3 @@
-Here is the **perfect final `README.md`** for your **single, organized `library-system` repository** — with both versions cleanly separated.
-
-Place this file at the **root** of your repo (replaces any old README):
-
 ```markdown
 # Library Management System
 
@@ -9,8 +5,8 @@ A complete C++ Library Management System – **two versions in one repo**:
 
 | Version                  | Folder                     | Status     | Recommended |
 |--------------------------|----------------------------|------------|-------------|
-| Modern SQLite Version    | [`library system db/`](./library%20system%20db/)       | Active     | YES         |
-| Legacy Text-File Version | [`library system text/`](./library%20system%20text/)   | Archived   | Learning only |
+| Modern SQLite Version    | [`library-system-db/`](./library-system-0db/)       | Active     | YES         |
+| Legacy Text-File Version | [`library-system-text/`](./library-system-text/)   | Archived   | Learning only |
 
 **Use the SQLite version** – it's faster, safer, and production-ready.  
 The text-file version is kept for learning and historical reference.
