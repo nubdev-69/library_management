@@ -1,14 +1,14 @@
-#include "LIBRARY2.h"
+#include "library.h"
 #include <iostream>
 #include <string>
 using namespace std;
 
 int main() {
-    LIBRARY2 lib("library.db");
+    LIBRARY lib("library.db");
 
     int choice;
     do {
-        // system("cls||clear");  // Works on Windows & Linux/macOS
+        system("cls||clear");  // Works on Windows & Linux/macOS
         cout << "====================================\n";
         cout << "     LIBRARY MANAGEMENT SYSTEM      \n";
         cout << "====================================\n";

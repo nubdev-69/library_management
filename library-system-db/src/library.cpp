@@ -1,4 +1,4 @@
-#include "LIBRARY2.h"
+#include "library.h"
 #include <iostream>
 #include <cstring>
 #include<string>
@@ -6,7 +6,7 @@
 using namespace std;
 
 // Constructor - open DB once
-LIBRARY2::LIBRARY2(const string& dbName) {
+LIBRARY::LIBRARY(const string& dbName) {
     if (sqlite3_open(dbName.c_str(), &db) != SQLITE_OK) {
         cerr << "Can't open database: " << sqlite3_errmsg(db) << endl;
         db = nullptr;
@@ -20,7 +20,7 @@ LIBRARY2::LIBRARY2(const string& dbName) {
     seedDatabase();
 }
 
-void LIBRARY2::initSchema() {
+void LIBRARY::initSchema() {
     const char* schema = R"SQL(
         CREATE TABLE IF NOT EXISTS categories (
             id   INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -59,7 +59,7 @@ void LIBRARY2::initSchema() {
     }
 }
 
-LIBRARY2::~LIBRARY2() {
+LIBRARY::~LIBRARY() {
     if (db) sqlite3_close(db);
 }
 
@@ -84,7 +84,7 @@ struct IssueSeed {
     int memberId;
 };
 
-void LIBRARY2::seedDatabase() {
+void LIBRARY::seedDatabase() {
     // Idempotency guard: don't reseed if books already exist
     sqlite3_stmt* checkStmt;
     int bookCount = 0;
@@ -271,7 +271,7 @@ void LIBRARY2::seedDatabase() {
 }
 
 // Helper: execute simple query without binding
-bool LIBRARY2::executeQuery(const char* sql) {
+bool LIBRARY::executeQuery(const char* sql) {
     char* errMsg = nullptr;
     if (sqlite3_exec(db, sql, nullptr, nullptr, &errMsg) != SQLITE_OK) {
         cerr << "SQL error: " << errMsg << endl;
@@ -281,7 +281,7 @@ bool LIBRARY2::executeQuery(const char* sql) {
     return true;
 }
 
-bool LIBRARY2::bindAndStep(sqlite3_stmt* stmt) {
+bool LIBRARY::bindAndStep(sqlite3_stmt* stmt) {
     if (sqlite3_step(stmt) != SQLITE_DONE) {
         cerr << "SQL step failed: " << sqlite3_errmsg(db) << endl;
         return false;
@@ -289,7 +289,7 @@ bool LIBRARY2::bindAndStep(sqlite3_stmt* stmt) {
     return true;
 }
 // Utility functions
-string LIBRARY2::getMemberName(int id) const {
+string LIBRARY::getMemberName(int id) const {
     string name = "Unknown";
     string sql = "SELECT name FROM Members WHERE memberId = ?;";
     sqlite3_stmt* stmt;
@@ -302,7 +302,7 @@ string LIBRARY2::getMemberName(int id) const {
     return name;
 }
 
-string LIBRARY2::getBookTitle(int id) const {
+string LIBRARY::getBookTitle(int id) const {
     string title = "Unknown";
     string sql = "SELECT title FROM books WHERE id = ?;";
     sqlite3_stmt* stmt;
@@ -315,7 +315,7 @@ string LIBRARY2::getBookTitle(int id) const {
     return title;
 }
 
-bool LIBRARY2::memberExists(int id) const {
+bool LIBRARY::memberExists(int id) const {
     string sql = "SELECT 1 FROM Members WHERE memberId = ? LIMIT 1;";
     sqlite3_stmt* stmt;
     if (sqlite3_prepare_v2(db, sql.c_str(), -1, &stmt, nullptr) != SQLITE_OK) return false;
@@ -325,7 +325,7 @@ bool LIBRARY2::memberExists(int id) const {
     return exists;
 }
 
-bool LIBRARY2::bookExists(int id) const {
+bool LIBRARY::bookExists(int id) const {
     string sql = "SELECT 1 FROM books WHERE id = ? LIMIT 1;";
     sqlite3_stmt* stmt;
     if (sqlite3_prepare_v2(db, sql.c_str(), -1, &stmt, nullptr) != SQLITE_OK) return false;
@@ -335,7 +335,7 @@ bool LIBRARY2::bookExists(int id) const {
     return exists;
 }
 
-bool LIBRARY2::isBookAvailable(int bookId) const {
+bool LIBRARY::isBookAvailable(int bookId) const {
     string sql = "SELECT 1 FROM Issues WHERE bookId = ? AND returnDate IS NULL LIMIT 1;";
     sqlite3_stmt* stmt;
     if (sqlite3_prepare_v2(db, sql.c_str(), -1, &stmt, nullptr) != SQLITE_OK) return false;
@@ -346,7 +346,7 @@ bool LIBRARY2::isBookAvailable(int bookId) const {
 }
 
 // Core functions
-void LIBRARY2::issueBook(int memId, int bookId) {
+void LIBRARY::issueBook(int memId, int bookId) {
     if (!memberExists(memId) || !bookExists(bookId)) {
         cerr << "Invalid member or book ID\n";
         return;
@@ -371,7 +371,7 @@ void LIBRARY2::issueBook(int memId, int bookId) {
     sqlite3_finalize(stmt);
 }
 
-void LIBRARY2::returnBook(int bookId) {
+void LIBRARY::returnBook(int bookId) {
     if (!bookExists(bookId) || isBookAvailable(bookId)) {
         cerr << "Book is not issued or invalid\n";
         return;
@@ -399,8 +399,8 @@ void LIBRARY2::returnBook(int bookId) {
     }
 }
 
-void LIBRARY2::displayAllBooks() {
-    cout << "\n=== All Books in LIBRARY2 ===\n";
+void LIBRARY::displayAllBooks() {
+    cout << "\n=== All Books in LIBRARY ===\n";
     string sql = R"(
         SELECT b.id, b.title, b.author, c.name, i.bookId IS NULL
         FROM books b
@@ -426,7 +426,7 @@ void LIBRARY2::displayAllBooks() {
     sqlite3_finalize(stmt);
 }
 
-void LIBRARY2::listIssuedBooks(){
+void LIBRARY::listIssuedBooks(){
     cout<< "\n <----All Issued Books by Member---->\n";
     const char* query =
         "SELECT m.memberid, m.name, b.id, b.title, b.author, c.name, i.issueDate "
@@ -460,7 +460,7 @@ void LIBRARY2::listIssuedBooks(){
     if (!any) cout << "No books currently issued.\n";
     sqlite3_finalize(stmt);
 }
-void LIBRARY2::searchBookByTitle(const string& title){
+void LIBRARY::searchBookByTitle(const string& title){
     const char* query="select b.id, b.title, b.author, c.name from books b "
                         "left join categories c on c.id = b.categoryId "
                         "where b.title like ?";
@@ -486,7 +486,7 @@ void LIBRARY2::searchBookByTitle(const string& title){
     sqlite3_finalize(stmt);
 
 }
-void LIBRARY2::listBooksByMember(int memberId){
+void LIBRARY::listBooksByMember(int memberId){
     const char* query="select b.id, b.title, b.author, c.name, i.issueDate from issues i "
     "left join books b on b.id=i.bookId "
     "left join categories c on c.id=b.categoryId "
@@ -517,7 +517,7 @@ void LIBRARY2::listBooksByMember(int memberId){
     sqlite3_finalize(stmt);
 }
 
-int LIBRARY2::addBook(const string& title, const string& author, const string& category, const string& filePath) {
+int LIBRARY::addBook(const string& title, const string& author, const string& category, const string& filePath) {
 
     if(!title.size() || !author.size() || !category.size()){
         cout<<"Enter Valid Book"<<endl;
@@ -583,7 +583,7 @@ string getPassword(){
     return password;
     
 }
-void LIBRARY2::addMember(const string& role){
+void LIBRARY::addMember(const string& role){
     string name,email,password;
     cout<<"Enter Your Name"<<endl;
     cin>>name;
@@ -612,7 +612,7 @@ void LIBRARY2::addMember(const string& role){
 
 }
 
-int LIBRARY2::getCategoryId(const string &name)const {
+int LIBRARY::getCategoryId(const string &name)const {
     if(name.empty()){
         return 0;
     }
@@ -650,7 +650,7 @@ int LIBRARY2::getCategoryId(const string &name)const {
     return (int)sqlite3_last_insert_rowid(db);
 }
 
-void LIBRARY2::deleteBook(int bookId){
+void LIBRARY::deleteBook(int bookId){
     if(!bookExists(bookId)) return;
     sqlite3_stmt* stmt;
     const char* query="delete from books where id=?;";
@@ -669,7 +669,7 @@ void LIBRARY2::deleteBook(int bookId){
     return;
     
 }
-void LIBRARY2::deleteMember(int memberId){
+void LIBRARY::deleteMember(int memberId){
     if(!memberExists(memberId)) return;
     sqlite3_stmt* stmt;
     const char* query="delete from members where memberid=?;";

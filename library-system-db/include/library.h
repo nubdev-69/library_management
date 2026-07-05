@@ -1,11 +1,11 @@
-#ifndef LIBRARY2_H
-#define LIBRARY2_H
+#ifndef LIBRARY_H
+#define LIBRARY_H
 
 #include <string>
 
 #include <sqlite3.h>
 
-class LIBRARY2 {
+class LIBRARY {
 private:
     sqlite3* db;
 
@@ -15,8 +15,8 @@ private:
     void initSchema();
 
 public:
-    LIBRARY2(const std::string& dbName = "library.db");
-    ~LIBRARY2();
+    LIBRARY(const std::string& dbName = "library.db");
+    ~LIBRARY();
     void seedDatabase();  
 
     // Core functions
