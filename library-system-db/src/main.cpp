@@ -8,7 +8,7 @@ int main() {
 
     int choice;
     do {
-        system("cls||clear");  // Works on Windows & Linux/macOS
+        // system("cls||clear");  // Works on Windows & Linux/macOS
         cout << "====================================\n";
         cout << "     LIBRARY MANAGEMENT SYSTEM      \n";
         cout << "====================================\n";

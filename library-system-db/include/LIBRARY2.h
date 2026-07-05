@@ -12,10 +12,12 @@ private:
     // Helper functions (private)
     bool executeQuery(const char* sql); // for simple non-select
     bool bindAndStep(sqlite3_stmt* stmt);
+    void initSchema();
 
 public:
-    explicit LIBRARY2(const std::string& dbName = "LIBRARY2.db");
+    LIBRARY2(const std::string& dbName = "library.db");
     ~LIBRARY2();
+    void seedDatabase();  
 
     // Core functions
     int  addBook(const std::string& title, const std::string& author,
